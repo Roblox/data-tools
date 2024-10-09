@@ -1,0 +1,11 @@
+ -- An actual query we use with redacted roles to insert data from s3 parquet aggregates
+ 
+ REPLACE INTO "dev_engagement_low_cardinality_dims" OVERWRITE     WHERE __time >= TIMESTAMP '2024-01-01' and __time < TIMESTAMP '2024-01-02' WITH ext AS (
+         SELECT *     FROM TABLE(
+            EXTERN(
+                '{"type": "s3", "properties": {"assumeRoleArn": "arn:aws:iam::{{AWSAccount}}:role/{{S3ReaderRole}}"}, "prefixes": ["s3://engagementdata/creator_analytics_engagement_datasketch/ds=2024-01-01"]}', '{"type":"parquet"}', '[     {"name":"datestring","type":"string"},     {"name":"universe_id","type":"string"},     {"name":"age_group","type":"string"},     {"name":"gender","type":"string"},     {"name":"platform","type":"string"},     {"name":"os","type":"string"},     {"name":"country","type":"string"},     {"name":"locale","type":"string"},     {"name":"is_new_user","type":"string"},     {"name":"agg_level","type":"string"},     {"name":"active_users_theta","type":"string"},     {"name":"active_user_1d_new_theta","type":"string"},     {"name":"active_user_7d_new_theta","type":"string"},     {"name":"active_user_30d_new_theta","type":"string"},     {"name":"active_user_2w_new_theta","type":"string"},     {"name":"time_spent_secs","type":"long"},     {"name":"visits","type":"long"},     {"name":"active_users_hll","type":"string"} ]'
+            )
+        )
+    )
+SELECT   time_parse(datestring, 'yyyy-MM-dd') as __time,   universe_id,   age_group,   gender,   platform,   os,   is_new_user,   COMPLEX_DECODE_BASE64('thetaSketch',active_users_theta) AS "active_users_theta",   COMPLEX_DECODE_BASE64('thetaSketch',active_user_1d_new_theta) AS "active_user_1d_new_theta",   COMPLEX_DECODE_BASE64('thetaSketch',active_user_7d_new_theta) AS "active_user_7d_new_theta",   COMPLEX_DECODE_BASE64('thetaSketch',active_user_30d_new_theta) AS "active_user_30d_new_theta",   COMPLEX_DECODE_BASE64('HLLSketch',active_users_hll) AS "active_users_hll",   time_spent_secs,   visits as visits_cnt FROM ext
+WHERE agg_level = 4 PARTITIONED BY DAY CLUSTERED BY universe_id, age_group, platform, os
