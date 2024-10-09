@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <packaging>pom</packaging>
+
+  <groupId>com.roblox</groupId>
+  <artifactId>datasketches-parent</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <description>Trino and Spark adapters for datasketches</description>
+
+  <name>datasketches-parent</name>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <dep.trino.version>413</dep.trino.version>
+    <dep.airlift.version>228</dep.airlift.version>
+    <dep.kotlin.version>1.8.0</dep.kotlin.version>
+    <dep.errorprone.version>2.18.0</dep.errorprone.version>
+
+    <project.build.targetJdk>17</project.build.targetJdk>
+    <air.java.version>17.0.4</air.java.version>
+
+    <air.check.skip-license>true</air.check.skip-license>
+    <air.check.skip-spotbugs>true</air.check.skip-spotbugs>
+    <maven.compiler.target>11</maven.compiler.target>
+  </properties>
+
+  <modules>
+    <module>spark-datasketches</module>
+    <module>trino-datasketches</module>
+  </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.apache.datasketches</groupId>
+        <artifactId>datasketches-java</artifactId>
+        <version>6.0.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.datasketches</groupId>
+        <artifactId>datasketches-memory</artifactId>
+        <version>2.2.0</version>
+      </dependency>
+      <dependency>
+        <groupId>io.airlift</groupId>
+        <artifactId>bootstrap</artifactId>
+        <version>${dep.airlift.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.airlift</groupId>
+        <artifactId>configuration</artifactId>
+        <version>${dep.airlift.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.airlift</groupId>
+        <artifactId>log-manager</artifactId>
+        <version>${dep.airlift.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.airlift</groupId>
+        <artifactId>http-client</artifactId>
+        <version>${dep.airlift.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.airlift</groupId>
+        <artifactId>http-server</artifactId>
+        <version>${dep.airlift.version}</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>io.airlift</groupId>
+        <artifactId>json</artifactId>
+        <version>${dep.airlift.version}</version>
+      </dependency>
+
+<!--      <dependency>-->
+<!--        <groupId>io.airlift</groupId>-->
+<!--        <artifactId>slice</artifactId>-->
+<!--        <version>${dep.airlift.version}</version>-->
+<!--      </dependency>-->
+
+      <dependency>
+        <groupId>io.airlift</groupId>
+        <artifactId>log</artifactId>
+        <version>${dep.airlift.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.jdbi</groupId>
+        <artifactId>jdbi3-bom</artifactId>
+        <type>pom</type>
+        <version>3.37.1</version>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>com.clearspring.analytics</groupId>
+        <artifactId>stream</artifactId>
+        <version>2.9.5</version>
+      </dependency>
+
+      <dependency>
+        <groupId>net.bytebuddy</groupId>
+        <artifactId>byte-buddy</artifactId>
+        <version>1.14.1</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.google.errorprone</groupId>
+        <artifactId>error_prone_annotations</artifactId>
+        <version>${dep.errorprone.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.trino</groupId>
+        <artifactId>trino-array</artifactId>
+        <version>${dep.trino.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.datasketches</groupId>
+        <artifactId>datasketches-java</artifactId>
+        <version>6.0.0</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.datasketches</groupId>
+        <artifactId>datasketches-memory</artifactId>
+        <version>2.2.0</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.trino</groupId>
+        <artifactId>trino-spi</artifactId>
+        <version>${dep.trino.version}</version>
+        <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>io.airlift</groupId>
+        <artifactId>testing</artifactId>
+        <version>${dep.airlift.version}</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>io.trino</groupId>
+        <artifactId>trino-memory</artifactId>
+        <version>${dep.trino.version}</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>io.trino</groupId>
+        <artifactId>trino-main</artifactId>
+        <version>${dep.trino.version}</version>
+        <scope>test</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+
+      <dependency>
+        <groupId>io.trino</groupId>
+        <artifactId>trino-main</artifactId>
+        <version>${dep.trino.version}</version>
+        <type>test-jar</type>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>io.trino</groupId>
+        <artifactId>trino-testing</artifactId>
+        <version>${dep.trino.version}</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>io.trino</groupId>
+        <artifactId>trino-tpch</artifactId>
+        <version>${dep.trino.version}</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>io.airlift</groupId>
+        <artifactId>node</artifactId>
+        <version>${dep.airlift.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.airlift</groupId>
+        <artifactId>units</artifactId>
+        <version>1.8</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <!-- Take out for source available distribution -->
+  <distributionManagement>
+    <repository>
+      <id>central</id>
+      <name>artifactory.rbx.com-releases</name>
+      <url>https://artifactory.rbx.com:443/maven-rbx-snd-all</url>
+    </repository>
+  </distributionManagement>
+
+</project>
