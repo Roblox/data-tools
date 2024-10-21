@@ -74,8 +74,8 @@ FROM
         "engagement_mau_cumulative__engagement".universe_id = '1234'
       )
       AND (
-        "engagement_mau_cumulative__engagement".__time > TIMESTAMPADD(day, -30, TIME_PARSE('2024-01-01'))
-        AND "engagement_mau_cumulative__engagement".__time <= TIME_PARSE('2024-01-07')
+        "engagement_mau_cumulative__engagement".__time > TIMESTAMPADD(day, -30, TIME_PARSE('2024-09-30'))
+        AND "engagement_mau_cumulative__engagement".__time <= TIME_PARSE('2024-10-07')
       )
       AND "engagement_mau_cumulative__engagement"."engagement__time_day" > TIMESTAMPADD(day, -30, "Engagement.time_series"."date_to")
       AND "engagement_mau_cumulative__engagement"."engagement__time_day" <= "Engagement.time_series"."date_to"

@@ -1,0 +1,4 @@
+# This is the codeowners file. It describes the people who must approve a code review
+# The first entry is a path filter for which things code owners will be required on.
+
+* @roblox/data-open-source
